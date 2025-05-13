@@ -16,8 +16,11 @@ except ImportError as e:
     ) from e
 
 client = AsyncClient()
-weather_api_key = 'L97uN9qcdtaZIrKKTEJwALoLbAmwOYt5'
-geo_api_key = '680b8aa435051510981647dak61f3d5' 
+# create a free API key at https://www.tomorrow.io/weather-api/
+weather_api_key = '<weather_api_key>'
+# create a free API key at https://geocode.maps.co/
+geo_api_key = '<geo_api_key>' 
+
 deps = Deps(client=client, weather_api_key=weather_api_key, geo_api_key=geo_api_key)
 
 

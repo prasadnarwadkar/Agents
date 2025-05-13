@@ -131,9 +131,10 @@ async def get_weather(ctx: RunContext[Deps], lat: float, lng: float) -> dict[str
 async def main():
     async with AsyncClient() as client:
         # create a free API key at https://www.tomorrow.io/weather-api/
-        weather_api_key = 'L97uN9qcdtaZIrKKTEJwALoLbAmwOYt5'
+        weather_api_key = '<weather_api_key>'
         # create a free API key at https://geocode.maps.co/
-        geo_api_key = '680b8aa435051510981647dak61f3d5' 
+        geo_api_key = '<geo_api_key>' 
+        
         deps = Deps(
             client=client, weather_api_key=weather_api_key, geo_api_key=geo_api_key
         )
