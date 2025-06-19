@@ -52,10 +52,13 @@ support_agent = Agent(
 
 @support_agent.system_prompt
 async def add_customer_name(ctx: RunContext[SupportDependencies]) -> str:
-    customer_name = await ctx.deps.db.customer_name(id=ctx.deps.customer_id)
-    customer_name = ctx.deps.customer_name
-    return f"The customer's name is {customer_name!r}"
-
+    if isinstance(ctx.prompt, (int, float)): 
+        customer_name = await ctx.deps.db.customer_name(id=ctx.deps.customer_id)
+        customer_name = ctx.deps.customer_name
+        return f"The customer's name is {customer_name!r}"
+    else:
+        customer_name = ctx.prompt
+        return f"The customer's name is {customer_name!r}"
 
 @support_agent.tool
 async def customer_balance(

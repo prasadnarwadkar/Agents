@@ -6,7 +6,9 @@ import os
 from httpx import AsyncClient
 
 from pydantic_ai.messages import ToolCallPart, ToolReturnPart
-from bank_support_agent import  DatabaseConn, SupportDependencies, support_agent
+
+from bank_support_agent import support_agent, DatabaseConn, SupportDependencies
+
 
 try:
     import gradio as gr

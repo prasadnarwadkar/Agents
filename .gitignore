@@ -87,3 +87,4 @@ env
 db.sqlite3
 venv
 .vscode
+mysettings.py
