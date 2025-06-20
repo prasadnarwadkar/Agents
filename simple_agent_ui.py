@@ -16,11 +16,15 @@ except ImportError as e:
         "Please install gradio with `pip install gradio`. You must use python>=3.10."
     ) from e
 
-def chat_with_openai(input_text):
+def chat_with_openai(input_text:str,  chatbot: list[dict], message_history: list):
+    # Append user message to history
+    message_history.append({"role": "user", "content": input_text})
+    chatbot.append({"role": "user", "content": input_text})
+
     response_stream = client.responses.create(
         model="gpt-4o-mini",
         stream=True,
-        input= input_text,
+        input=message_history,
         tools=[
             {
                 "type": "file_search",
@@ -28,6 +32,9 @@ def chat_with_openai(input_text):
             }
         ],
     )
+
+    chatbot.append({'role': 'assistant', 'content': ''})
+    
     response_text = ""
     for event in response_stream:
         if event.type == "response.output_text.delta":
@@ -35,21 +42,35 @@ def chat_with_openai(input_text):
             response_text += event.delta
         elif event.type == "response.error":
             print(f"\nError occurred: {event.error}")
-        yield response_text
+        # Append assistant response to history
+        message_history.append({"role": "assistant", "content": response_text})
+        chatbot[-1]['content'] = response_text
+            
+        yield gr.skip(), chatbot, gr.skip()
+
+    yield gr.Textbox(interactive=True), chatbot, message_history
+
+def select_data(message: gr.SelectData) -> str:
+    return message.value['text']
+
 
 with gr.Blocks() as demo:
+    # Maintain message history
+    message_history = gr.State([])
+    chatbot = gr.Chatbot(
+        label='Bank Assistant',
+        type='messages',
+        
+        avatar_images=(None, 'https://ai.pydantic.dev/img/logo-white.svg'),
+        examples=[
+            {'text': 'What is your name?', 'alt_text': ''},
+        ],
+    )
     with gr.Row():
         with gr.Column():
             user_input = gr.Textbox(label="Ask something")
-            submit_btn = gr.Button("Submit")
-        with gr.Column():
-            output = gr.Textbox(label="Response")
 
-    submit_btn.click(fn=chat_with_openai, inputs=user_input, outputs=output)
+    user_input.submit(fn=chat_with_openai, inputs=[user_input,chatbot,message_history], outputs=[user_input,chatbot,message_history])
+    chatbot.example_select(select_data, None, [user_input])
     demo.queue()
-    demo.launch()
-
-if __name__ == "__main__":
-    demo.queue()
-
     demo.launch()
