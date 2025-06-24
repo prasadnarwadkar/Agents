@@ -110,4 +110,4 @@ with gr.Blocks() as demo:
     )
     chatbot.example_select(select_data, None, [user_input])
     demo.queue()
-    demo.launch()
+    demo.launch(share=True)

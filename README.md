@@ -1,3 +1,9 @@
+---
+title: rag-responsive
+app_file: simple_agent_ui.py
+sdk: gradio
+sdk_version: 5.34.2
+---
 # Agentic AI
 Read more on this in [this article](https://www.linkedin.com/posts/prasad-n-85595b14b_agenticai-aiagents-ai-activity-7327612898816487424-A4E4?utm_source=share&utm_medium=member_desktop&rcm=ACoAACRFQAEBo2NJwtpN0Cur9pjobg-OKRmGduU).
 
