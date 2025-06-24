@@ -7,6 +7,7 @@ vector_store = None
 
 try:
     import gradio as gr
+    print(gr.__version__)
 except ImportError as e:
     raise ImportError(
         "Please install gradio with `pip install gradio`. You must use python>=3.10."
