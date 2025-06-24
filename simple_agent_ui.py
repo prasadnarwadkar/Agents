@@ -58,7 +58,7 @@ with gr.Blocks() as demo:
     # Maintain message history
     message_history = gr.State([])
     chatbot = gr.Chatbot(
-        label='Bank Assistant',
+        label='Your Friendly Assistant',
         type='messages',
         
         avatar_images=(None, 'https://ai.pydantic.dev/img/logo-white.svg'),
@@ -68,7 +68,10 @@ with gr.Blocks() as demo:
     )
     with gr.Row():
         with gr.Column():
-            user_input = gr.Textbox(label="Ask something")
+            gr.DeepLinkButton(interactive=True,  link='https://skolo-ai-agent.ams3.cdn.digitaloceanspaces.com/pydantic/the_seven_realms.pdf')
+    with gr.Row():
+        with gr.Column():
+            user_input = gr.Textbox(label="Ask Questions Related to the above PDF")
 
     user_input.submit(fn=chat_with_openai, inputs=[user_input,chatbot,message_history], outputs=[user_input,chatbot,message_history])
     chatbot.example_select(select_data, None, [user_input])
