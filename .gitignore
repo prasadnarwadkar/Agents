@@ -88,3 +88,5 @@ db.sqlite3
 venv
 .vscode
 mysettings.py
+voice/
+.gradio/certificate.pem

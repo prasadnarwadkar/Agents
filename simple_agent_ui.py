@@ -63,7 +63,7 @@ with gr.Blocks() as demo:
         
         avatar_images=(None, 'https://ai.pydantic.dev/img/logo-white.svg'),
         examples=[
-            {'text': 'What is your name?', 'alt_text': ''},
+            {'text': 'What is Masre Dox?', 'alt_text': ''},
         ],
     )
     with gr.Row():
